@@ -18,32 +18,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_marginLeft="19dp"
-                android:layout_gravity="start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="Week"
-                android:textSize="20sp"/>
-
-            <LinearLayout
-                android:layout_marginTop="6dp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
                 <TextView
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="select"/>
+                    android:textStyle="bold"
+                    android:text="Week"
+                    android:textSize="20sp"/>
 
                 <Spinner
+                    android:layout_gravity="center"
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/weekSPINNER"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-
-            </LinearLayout>
 
         </LinearLayout>
         <LinearLayout
@@ -52,32 +40,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:textStyle="bold"
-                android:layout_marginLeft="19dp"
-                android:layout_gravity="start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Type"
-                android:textSize="20sp"/>
-
-            <LinearLayout
-                android:layout_marginTop="6dp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
                 <TextView
-                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="select"/>
+                    android:text="Type"
+                    android:textSize="20sp"/>
 
                 <Spinner
+                    android:layout_gravity="center"
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/mealTypeSPINNER"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -88,31 +65,19 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_marginLeft="19dp"
-                android:layout_gravity="start"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Day"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
 
-            <LinearLayout
-                android:layout_marginTop="6dp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="select"/>
-
                 <Spinner
+                    android:layout_marginTop="6dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/daySPINNER"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-
-            </LinearLayout>
 
         </LinearLayout>
 

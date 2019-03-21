@@ -2,18 +2,25 @@ package com.pro.deepak.meal.Tabs;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextClock;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.pro.deepak.meal.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
-public class home extends Fragment {
+public class home extends Fragment implements OnItemSelectedListener{
 
     Calendar calendar= Calendar.getInstance();
     String[][][] mealArray=new String[5][8][5];
@@ -22,18 +29,84 @@ public class home extends Fragment {
     String currentDay,currentWeek,currentMeal,spinnerDay,spinnerWeek,spinnerMeal,mealDay,mealType;
     int weekIndex,dayIndex,mealIndex,currentHour,currentWeekIndex,currentDayIndex,currentMealIndex;
 
+    TextView selectedMealTV,selectedMealTypeTV;
+
+    Spinner weekSPINNER,meal_typeSPINNER,daySPINNER;
+
+    List<String> week_category,meal_type_category,day_category;
+
+    ArrayAdapter<String> weekAdapter,meal_type_Adapter,day_type_Adapter;
+
+    CardView selectedMealCV;
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.home_fragment, container, false);
-        currentMealHasTextView=(TextView) rootView.findViewById(R.id.displayItems);
-        itemsTextView=(TextView)rootView.findViewById(R.id.displayItems);
+        currentMealHasTextView=(TextView) rootView.findViewById(R.id.displayMealTV);
+        itemsTextView=(TextView)rootView.findViewById(R.id.displayMealTV);
         currentMealTypeTextView=(TextView)rootView.findViewById(R.id.mealTypeTv);
         dateAndDayTextView=(TextView)rootView.findViewById(R.id.dateAndDay);
         currentWeekTextView=(TextView)rootView.findViewById(R.id.currentWeek);
 
+        selectedMealTV = rootView.findViewById(R.id.selectedMealTV);
+        selectedMealTypeTV = rootView.findViewById(R.id.selectedMealTypeTV);
+
+        selectedMealCV = rootView.findViewById(R.id.selectedMealCV);
+
         setMealArray();
         setCurrentItems();
+
+        weekSPINNER= (Spinner) rootView.findViewById(R.id.weekSPINNER); // Week Spinner element
+        meal_typeSPINNER= (Spinner) rootView.findViewById(R.id.mealTypeSPINNER); // Meal type Spinner element
+        daySPINNER= (Spinner) rootView.findViewById(R.id.daySPINNER); // Week Spinner element
+
+        // Spinner click listener
+        weekSPINNER.setOnItemSelectedListener(this);
+        meal_typeSPINNER.setOnItemSelectedListener(this);
+        daySPINNER.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        week_category = new ArrayList<>();
+        week_category.add("Select");
+        week_category.add("Week 1");
+        week_category.add("Week 2");
+        week_category.add("Week 3");
+        week_category.add("Week 4");
+
+        meal_type_category = new ArrayList<>();
+        meal_type_category.add("Select");
+        meal_type_category.add("Breakfast");
+        meal_type_category.add("Lunch");
+        meal_type_category.add("Snacks");
+        meal_type_category.add("Dinner");
+
+        day_category = new ArrayList<>();
+        day_category.add("Select");
+        day_category.add("Sunday");
+        day_category.add("Monday");
+        day_category.add("Tuesday");
+        day_category.add("Wednesday");
+        day_category.add("Thursday");
+        day_category.add("Friday");
+        day_category.add("Saturday");
+
+
+        weekAdapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, week_category);
+        meal_type_Adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, meal_type_category);
+        day_type_Adapter= new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, day_category);
+
+        // Drop down layout style - list view with radio button
+        weekAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        meal_type_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        day_type_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        weekSPINNER.setAdapter(weekAdapter);
+        meal_typeSPINNER.setAdapter(meal_type_Adapter);
+        daySPINNER.setAdapter(day_type_Adapter);
+
+        selectedMealCV.setVisibility(View.INVISIBLE);
 
         return rootView;
     }
@@ -92,6 +165,8 @@ public class home extends Fragment {
         currentWeekTextView.setText(currentWeek);
 
     }
+
+
 
     public void setMealArray()
     {
@@ -285,5 +360,78 @@ public class home extends Fragment {
 
     }
 
-}
+    public void setIndexs(){
 
+        if(count==3)
+           selectedMealCV.setVisibility(View.VISIBLE);
+
+        switch (currentMeal){
+            case "Breakfast":currentMealIndex=1;break;
+            case "Lunch":currentMealIndex=2;break;
+            case "Snacks":currentMealIndex=3;break;
+            case "Dinner":currentMealIndex=4;break;
+        }
+
+
+        // Setting current Day
+        switch (currentDay)
+        {
+            case "Sunday" : currentDayIndex=1;  break;
+            case "Monday" :  currentDayIndex=2; break;
+            case "Tuesday" : currentDayIndex=3;break;
+            case "Wednesday" :  currentDayIndex=4; break;
+            case "Thursday" :  currentDayIndex=5; break;
+            case "Friday" : ; currentDayIndex=6; break;
+            case "Saturday" :  currentDayIndex=7; break;
+        }
+
+        switch (currentWeek)
+        {
+            case "Week 1" : currentWeekIndex=1; break;
+            case "Week 2" : currentWeekIndex=2; break;
+            case "Week 3" : currentWeekIndex=3; break;
+            case "Week 4" : currentWeekIndex=4; break;
+        }
+
+        // Setting the TextViews in accordance with current indexes.
+        selectedMealTV.setText(mealArray[currentWeekIndex][currentDayIndex][currentMealIndex]);
+        selectedMealTypeTV.setText(currentMeal);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+
+        for (String string : week_category) {
+            if (string.equals(item)) {
+                currentWeek = item;
+                break;
+            }
+        }
+
+        for (String string : meal_type_category) {
+            if (string.equals(item)) {
+                currentMeal = item;
+                break;
+            }
+        }
+
+        for (String string : day_category) {
+            if (string.equals(item)) {
+                currentDay = item;
+                break;
+            }
+        }
+
+        // Showing selected spinner item
+        setIndexs();
+    }
+
+}
