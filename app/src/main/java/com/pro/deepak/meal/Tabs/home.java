@@ -38,7 +38,7 @@ public class home extends Fragment implements OnItemSelectedListener{
     ArrayAdapter<String> weekAdapter,meal_type_Adapter,day_type_Adapter;
 
     CardView selectedMealCV;
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -105,8 +105,6 @@ public class home extends Fragment implements OnItemSelectedListener{
         weekSPINNER.setAdapter(weekAdapter);
         meal_typeSPINNER.setAdapter(meal_type_Adapter);
         daySPINNER.setAdapter(day_type_Adapter);
-
-        selectedMealCV.setVisibility(View.INVISIBLE);
 
         return rootView;
     }
@@ -361,9 +359,6 @@ public class home extends Fragment implements OnItemSelectedListener{
     }
 
     public void setIndexs(){
-
-        if(count==3)
-           selectedMealCV.setVisibility(View.VISIBLE);
 
         switch (currentMeal){
             case "Breakfast":currentMealIndex=1;break;
